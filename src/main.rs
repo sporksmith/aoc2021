@@ -1,4 +1,4 @@
-use aoc2020::*;
+use aoc2021::*;
 use std::io::Cursor;
 use std::io::{self, Read};
 

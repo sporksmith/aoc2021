@@ -1,4 +1,4 @@
-use aoc2020::*;
+use aoc2021::*;
 use criterion::{criterion_group, criterion_main, Criterion};
 
 pub fn criterion_benchmark(c: &mut Criterion) {
