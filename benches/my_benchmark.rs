@@ -1,7 +1,7 @@
-use aoc2021::*;
+//use aoc2021::*;
 use criterion::{criterion_group, criterion_main, Criterion};
 
-pub fn criterion_benchmark(c: &mut Criterion) {
+pub fn criterion_benchmark(_c: &mut Criterion) {
     /*
     {
         let input = std::fs::read_to_string("inputs/day24").unwrap();

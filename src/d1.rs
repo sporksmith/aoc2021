@@ -17,9 +17,9 @@ pub async fn count_increases<
     // Read the first `N` into an array.
     let mut prevs = [0u32; N];
     let mut last_sum = 0u32;
-    for i in 0..N {
+    for prev in prevs.iter_mut() {
         let d = depths.next().await.unwrap();
-        prevs[i] = d;
+        *prev = d;
         last_sum += d;
     }
 
