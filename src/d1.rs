@@ -1,11 +1,13 @@
 use tokio::io::{AsyncRead, BufReader, AsyncBufReadExt};
 use tokio_stream::StreamExt;
 
+/// Look at a sliding window of size `N`, looking at the sum of each window, and
+/// returning the number of sums that were an increase over the previous sum.
 pub async fn count_increases<R: AsyncRead + std::marker::Unpin, const N: usize>(input: BufReader<R>) -> u64 {
     let lines = tokio_stream::wrappers::LinesStream::new(AsyncBufReadExt::lines(input));
     let mut depths = StreamExt::map(lines, |x| x.unwrap().parse::<u32>().unwrap());
 
-    // Fill in prevs
+    // Read the first `N` into an array.
     let mut prevs = [0u32; N];
     let mut last_sum = 0u32;
     for i in 0..N {
@@ -14,6 +16,8 @@ pub async fn count_increases<R: AsyncRead + std::marker::Unpin, const N: usize>(
         last_sum += d;
     }
 
+    // For each subsequent value we compute the new sliding sum and compare to
+    // the previous one.
     let mut increases = 0;
     let mut oldest_idx = 0;
     while let Some(depth) = depths.next().await {
