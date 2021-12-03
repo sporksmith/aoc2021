@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 tokio = { version = "1.14.0", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["io-util"] }
 
 [dev-dependencies]
 criterion = "0.3"

@@ -28,8 +28,7 @@ unified_test() {
     day=$1
     part=$2
     expected=$3
-    test $day$part `$bindir/aoc2020 $day$part < inputs/day$day` $3
+    test $day$part `$bindir/aoc2021 $day$part < inputs/$day.txt` $3
 }
 
-# Example:
-# unified_test 7 a 265
+unified_test 1 a 1301
