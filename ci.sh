@@ -32,3 +32,4 @@ unified_test() {
 }
 
 unified_test 1 a 1301
+unified_test 1 b 1301
