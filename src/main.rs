@@ -16,9 +16,9 @@ async fn main() {
     // The only command-line argument specifies which solution to run.
     let part = std::env::args().nth(1).expect("missing part");
     match part.as_str() {
-         "1a" => println!("{}", d1::part1(stdin).await),
-         "1b" => println!("{}", d1::part2(stdin).await),
-         "2a" => println!("{}", d2::part1(stdin).await),
+        "1a" => println!("{}", d1::part1(stdin).await),
+        "1b" => println!("{}", d1::part2(stdin).await),
+        "2a" => println!("{}", d2::part1(stdin).await),
         _ => panic!("Bad part {}", part),
     };
 }

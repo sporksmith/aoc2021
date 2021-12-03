@@ -1,6 +1,6 @@
-use tokio::io::{AsyncRead, BufReader, AsyncBufReadExt};
-use tokio_stream::StreamExt;
 use std::str::FromStr;
+use tokio::io::{AsyncBufReadExt, AsyncRead, BufReader};
+use tokio_stream::StreamExt;
 
 enum Command {
     Forward(u32),
@@ -39,10 +39,17 @@ impl Position {
     }
 }
 
-pub async fn part1<R: AsyncRead + std::marker::Unpin>(input: BufReader<R>) -> u32 {
-    let mut p = Position { horizontal: 0, depth: 0};
-    let lines = tokio_stream::wrappers::LinesStream::new(AsyncBufReadExt::lines(input));
-    let mut commands= StreamExt::map(lines, |x| x.unwrap().parse::<Command>().unwrap());
+pub async fn part1<R: AsyncRead + std::marker::Unpin>(
+    input: BufReader<R>,
+) -> u32 {
+    let mut p = Position {
+        horizontal: 0,
+        depth: 0,
+    };
+    let lines =
+        tokio_stream::wrappers::LinesStream::new(AsyncBufReadExt::lines(input));
+    let mut commands =
+        StreamExt::map(lines, |x| x.unwrap().parse::<Command>().unwrap());
     while let Some(cmd) = commands.next().await {
         p.process_command(cmd)
     }
@@ -53,7 +60,7 @@ pub async fn part1<R: AsyncRead + std::marker::Unpin>(input: BufReader<R>) -> u3
 mod testing {
     use super::*;
 
-    #[tokio::test(flavor="multi_thread")]
+    #[tokio::test(flavor = "multi_thread")]
     async fn test_example() {
         let s = "forward 5
 down 5

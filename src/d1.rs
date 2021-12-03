@@ -1,11 +1,18 @@
-use tokio::io::{AsyncRead, BufReader, AsyncBufReadExt};
+use tokio::io::{AsyncBufReadExt, AsyncRead, BufReader};
 use tokio_stream::StreamExt;
 
 /// Look at a sliding window of size `N`, looking at the sum of each window, and
 /// returning the number of sums that were an increase over the previous sum.
-pub async fn count_increases<R: AsyncRead + std::marker::Unpin, const N: usize>(input: BufReader<R>) -> u64 {
-    let lines = tokio_stream::wrappers::LinesStream::new(AsyncBufReadExt::lines(input));
-    let mut depths = StreamExt::map(lines, |x| x.unwrap().parse::<u32>().unwrap());
+pub async fn count_increases<
+    R: AsyncRead + std::marker::Unpin,
+    const N: usize,
+>(
+    input: BufReader<R>,
+) -> u64 {
+    let lines =
+        tokio_stream::wrappers::LinesStream::new(AsyncBufReadExt::lines(input));
+    let mut depths =
+        StreamExt::map(lines, |x| x.unwrap().parse::<u32>().unwrap());
 
     // Read the first `N` into an array.
     let mut prevs = [0u32; N];
@@ -32,12 +39,15 @@ pub async fn count_increases<R: AsyncRead + std::marker::Unpin, const N: usize>(
     increases
 }
 
-
-pub async fn part1<R: AsyncRead + std::marker::Unpin>(input: BufReader<R>) -> u64 {
+pub async fn part1<R: AsyncRead + std::marker::Unpin>(
+    input: BufReader<R>,
+) -> u64 {
     count_increases::<_, 1>(input).await
 }
 
-pub async fn part2<R: AsyncRead + std::marker::Unpin>(input: BufReader<R>) -> u64 {
+pub async fn part2<R: AsyncRead + std::marker::Unpin>(
+    input: BufReader<R>,
+) -> u64 {
     count_increases::<_, 3>(input).await
 }
 
@@ -45,7 +55,7 @@ pub async fn part2<R: AsyncRead + std::marker::Unpin>(input: BufReader<R>) -> u6
 mod testing {
     use super::*;
 
-    #[tokio::test(flavor="multi_thread")]
+    #[tokio::test(flavor = "multi_thread")]
     async fn test_example() {
         let s = "199
 200
